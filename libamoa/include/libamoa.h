@@ -135,7 +135,7 @@ int				double_array_size(char **double_array);
  * 
  * @param lst An tab who are free after this function
  */
-void			ft_free_double_array(char **lst);
+void			ft_free_double_array(void **lst);
 
 /******************************************************************************/
 /*                                                                            */
