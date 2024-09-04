@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_double_array.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:49:58 by ttaquet           #+#    #+#             */
-/*   Updated: 2024/05/07 17:20:28 by ttaquet          ###   ########.fr       */
+/*   Updated: 2024/09/04 19:58:02 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libamoa.h"
 
-void	ft_free_double_array(char **double_array)
+void	ft_free_double_array(void **double_array)
 {
 	int	i;
 

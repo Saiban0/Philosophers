@@ -112,7 +112,7 @@ bool			ft_isprint(int c);
  * @return true 'c' is a white space.
  * @return false 'c' is not a white space.
  */
-bool			is_whitespace(char	c);
+bool			is_whitespace(char c);
 
 /**
  * @brief If `c` is a letter, converts it to lowercase.
@@ -147,7 +147,7 @@ int				double_array_size(char **double_array);
  * 
  * @param double_array An tab who are free after this function.
  */
-void			ft_free_double_array(char **double_array);
+void			ft_free_double_array(void **double_array);
 
 /**
  * @brief This function simply prints every char * of a char ** and add a
