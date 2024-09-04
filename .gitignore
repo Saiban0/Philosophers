@@ -1,3 +1,5 @@
 /.dist
 /obj
 /philo
+*/*.o
+philo
