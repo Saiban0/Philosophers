@@ -6,7 +6,7 @@
 #    By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 19:00:14 by bchedru           #+#    #+#              #
-#    Updated: 2024/09/04 20:21:06 by bchedru          ###   ########.fr        #
+#    Updated: 2024/09/05 20:03:40 by bchedru          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFLAGS =	-Wall -Wextra -Werror -g \
 LFLAGS =	-Llibamoa \
 			-lamoa
 
-FILES = main philo_init philo_utils philo_loop philo_error philo_eat
+FILES = main philo_init philo_utils philo_loop philo_error philo_eat philo_think
 
 SRC_FILES = $(addprefix src/, $(FILES)) \
 
