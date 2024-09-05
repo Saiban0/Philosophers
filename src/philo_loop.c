@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:33:26 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/04 20:37:02 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/05 19:14:14 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	limited_routine(t_main *main, int i)
 {
-	while (has_every_philo_eaten(main))
+	while (has_every_philo_eaten(main) && is_a_philo_dead(main))
 	{
 		i = 0;
 		while (main->philo_list[i])
@@ -26,7 +26,6 @@ static void	limited_routine(t_main *main, int i)
 			}
 			i++;
 		}
-		main->time++;
 	}
 }
 
@@ -35,7 +34,8 @@ void	*philosopher_routine(void *data)
 	t_main	*main;
 
 	main = (t_main *)data;
-	
+	philo_eat(main, main->philo_list[main->tmp]);
+	// philo_think(main, main->philo_list[main->tmp]);
 	return (main);
 }
 
@@ -46,7 +46,7 @@ void	philo_loop(t_main *main)
 	i = 0;
 	if (main->number_of_times_each_philosophers_must_eat == -1)
 	{
-		while (!is_a_philo_dead(main->philo_list))
+		while (!is_a_philo_dead(main))
 		{
 			i = 0;
 			while (main->philo_list[i])
@@ -59,7 +59,6 @@ void	philo_loop(t_main *main)
 				}
 				i++;
 			}
-			main->time++;
 		}
 	}
 	else
