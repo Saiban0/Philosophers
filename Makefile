@@ -6,7 +6,7 @@
 #    By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 19:00:14 by bchedru           #+#    #+#              #
-#    Updated: 2024/09/05 20:03:40 by bchedru          ###   ########.fr        #
+#    Updated: 2024/09/06 16:52:29 by bchedru          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBAMOA = libamoa/libamoa.a
 CC = cc
 
 CFLAGS =	-Wall -Wextra -Werror -g \
-			-IInclude
+			-IInclude -fsanitize=thread
 
 LFLAGS =	-Llibamoa \
 			-lamoa
@@ -46,7 +46,7 @@ fclean : clean
 re: fclean all
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBAMOA)
-	$(CC) -o $@ $(OBJS) $(LFLAGS)
+	$(CC) -o $@ $(OBJS) $(LFLAGS) $(CFLAGS)
 
 $(LIBAMOA):
 	make -C libamoa
