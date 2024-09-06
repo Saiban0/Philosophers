@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:52:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/05 19:14:20 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:00:23 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_philo
 	int				times_eaten;
 	int				forks_held;
 	pthread_t		thread;
+	pthread_mutex_t	mutex;
 }				t_philo;
 
 typedef struct s_fork

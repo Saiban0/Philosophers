@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:25:44 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/05 19:55:45 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/06 16:42:37 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_philo	*create_philo(int id)
 	new->alive = 1;
 	new->times_eaten = 0;
 	new->forks_held = 0;
+	pthread_mutex_init(&new->mutex, NULL);
 	return (new);
 }
 
@@ -48,7 +49,6 @@ static t_fork	*create_fork(int id)
 	new->id = id + 1;
 	new->available = 1;
 	new->used_by = -1;
-	ft_printf("%d %d\n", new->id, new->available);
 	pthread_mutex_init(&new->mutex, NULL);
 	return (new);
 }
@@ -81,10 +81,7 @@ int	init_philo(t_main *main, int argc, char **argv)
 	main->fork_list = malloc(main->number_of_philosophers * sizeof(t_fork *));
 	if (!main->fork_list || !main->philo_list || create_philo_list(main)
 		|| create_fork_list(main))
-	{
 		error_management(e_init_failure, main);
-		return (1);
-	}
 	if (argc < 5)
 		main->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
 	return (0);

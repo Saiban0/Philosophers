@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:33:26 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/05 19:14:14 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/06 16:55:34 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ static void	limited_routine(t_main *main, int i)
 
 void	*philosopher_routine(void *data)
 {
-	t_main	*main;
+	t_main	*maint;
 
-	main = (t_main *)data;
-	philo_eat(main, main->philo_list[main->tmp]);
+	maint = (t_main *)data;
+	pthread_mutex_lock(&maint->philo_list[maint->tmp]->mutex);
+	philo_eat(maint, maint->philo_list[maint->tmp]);
 	// philo_think(main, main->philo_list[main->tmp]);
-	return (main);
+	pthread_mutex_unlock(&maint->philo_list[maint->tmp]->mutex);
+	return (maint);
 }
 
 void	philo_loop(t_main *main)

@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 19:07:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/05 18:09:03 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/06 15:39:41 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	destroy_fork_mutexes_and_threads(t_main *main)
 	{
 		put_back_forks(main, main->philo_list[i]);
 		pthread_mutex_destroy(&main->fork_list[i]->mutex);
+		pthread_mutex_destroy(&main->philo_list[i]->mutex);
 		pthread_join(main->philo_list[i]->thread, NULL);
 		i++;
 	}
