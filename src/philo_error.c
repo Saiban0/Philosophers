@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 19:07:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/06 15:39:41 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/09 19:41:07 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	destroy_fork_mutexes_and_threads(t_main *main)
 		pthread_join(main->philo_list[i]->thread, NULL);
 		i++;
 	}
+	pthread_mutex_destroy(&main->mutex);
 }
 
 static void	error_free(t_main *main)
@@ -42,9 +43,14 @@ static void	error_free(t_main *main)
 void	error_management(int error_code, t_main *main)
 {
 	if (error_code == 0)
-		ft_putstr_fd("philosophers: no error code \n", STDERR_FILENO);
+		ft_putstr_fd("philosophers: no error found \n", STDERR_FILENO);
 	if (error_code == 1)
 		ft_putstr_fd("philosophers: init failure \n", STDERR_FILENO);
+	if (error_code == 2)
+		ft_putstr_fd("philosophers: a philo died \n", STDERR_FILENO);
+	if (error_code == 3)
+		ft_putstr_fd("philosophers: must run with either 4 or 5 arguments \n",
+			STDERR_FILENO);
 	error_free(main);
 	exit(0);
 }
