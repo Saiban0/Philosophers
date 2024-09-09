@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:36:48 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/05 17:59:54 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/09 19:35:31 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_a_philo_dead(t_main *main)
 		if (!main->philo_list[i]->alive)
 		{
 			gettimeofday(&time, NULL);
-			ft_printf("%d %d died\n", time.tv_usec, i);
+			ft_printf("%d %d died\n", (time.tv_sec / 1000), i);
 			error_management(e_philo_died, main);
 			return (1);
 		}
@@ -39,7 +39,7 @@ int	has_every_philo_eaten(t_main *main)
 	while (++i < 4)
 	{
 		if (main->philo_list[i]->times_eaten
-			== main->number_of_times_each_philosophers_must_eat)
+			>= main->number_of_times_each_philosophers_must_eat)
 			i++;
 		else
 			return (1);
