@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:33:26 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/09 19:31:43 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:45:44 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	time_since_last_meal(t_main *main, t_philo *philo)
 	int				diff;
 
 	gettimeofday(&time, NULL);
-	diff = (time.tv_sec / 1000) - philo->last_meal;
+	diff = ((time.tv_sec * 1000) + (time.tv_usec / 1000)) - philo->last_meal;
 	if (diff > main->time_to_die)
 		philo->alive = 0;
 }
@@ -32,12 +32,11 @@ static void	*limited_routine(void *data)
 	main = philo->main;
 	while (!is_a_philo_dead(main) && has_every_philo_eaten(main))
 	{
-		// pthread_mutex_lock(&philo->mutex);
-		philo_eat(main, philo);
-		philo_think(main, philo);
-		philo_sleep(main, philo);
 		time_since_last_meal(main, philo);
-		// pthread_mutex_unlock(&philo->mutex);
+		philo_eat(main, philo);
+		philo_sleep(main, philo);
+		philo_think(main, philo);
+		time_since_last_meal(main, philo);
 	}
 	return (main);
 }
@@ -51,12 +50,11 @@ static void	*philosopher_routine(void *data)
 	main = philo->main;
 	while (!is_a_philo_dead(main))
 	{
-		pthread_mutex_lock(&philo->mutex);
-		philo_eat(main, philo);
-		philo_think(main, philo);
-		philo_sleep(main, philo);
 		time_since_last_meal(main, philo);
-		pthread_mutex_unlock(&philo->mutex);
+		philo_eat(main, philo);
+		philo_sleep(main, philo);
+		philo_think(main, philo);
+		time_since_last_meal(main, philo);
 	}
 	return (main);
 }
