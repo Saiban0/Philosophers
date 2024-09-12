@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 19:07:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/09 19:41:07 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:47:14 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void	destroy_fork_mutexes_and_threads(t_main *main)
 	i = 0;
 	while (i < main->number_of_philosophers)
 	{
+		pthread_join(main->philo_list[i]->thread, NULL);
 		put_back_forks(main, main->philo_list[i]);
 		pthread_mutex_destroy(&main->fork_list[i]->mutex);
 		pthread_mutex_destroy(&main->philo_list[i]->mutex);
-		pthread_join(main->philo_list[i]->thread, NULL);
 		i++;
 	}
 	pthread_mutex_destroy(&main->mutex);
@@ -42,8 +42,7 @@ static void	error_free(t_main *main)
 
 void	error_management(int error_code, t_main *main)
 {
-	if (error_code == 0)
-		ft_putstr_fd("philosophers: no error found \n", STDERR_FILENO);
+	// pthread_mutex_lock(&main->mutex);
 	if (error_code == 1)
 		ft_putstr_fd("philosophers: init failure \n", STDERR_FILENO);
 	if (error_code == 2)
