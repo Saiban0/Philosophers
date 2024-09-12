@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:25:44 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/09 18:45:51 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/12 15:22:00 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_philo	*create_philo(int id, t_main *main)
 	new->times_eaten = 0;
 	new->forks_held = 0;
 	gettimeofday(&time, NULL);
-	new->last_meal = (time.tv_sec / 1000);
+	new->last_meal = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 	pthread_mutex_init(&new->mutex, NULL);
 	new->main = main;
 	return (new);
@@ -80,7 +80,6 @@ int	init_philo(t_main *main, int argc, char **argv)
 	main->time_to_eat = ft_atoi(argv[3]);
 	main->time_to_sleep = ft_atoi(argv[4]);
 	main->number_of_times_each_philosophers_must_eat = -1;
-	main->tmp = -1;
 	main->philo_list = malloc(main->number_of_philosophers * sizeof(t_philo *));
 	main->fork_list = malloc(main->number_of_philosophers * sizeof(t_fork *));
 	pthread_mutex_init(&main->mutex, NULL);
