@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:52:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/09 18:37:55 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:09:12 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_main
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				tmp;
 	int				number_of_times_each_philosophers_must_eat;
 	t_philo			**philo_list;
 	t_fork			**fork_list;
@@ -72,5 +71,6 @@ void	philo_eat(t_main *main, t_philo *philo);
 void	put_back_forks(t_main *main, t_philo *philo);
 void	philo_think(t_main *main, t_philo *philo);
 void	philo_sleep(t_main *main, t_philo *philo);
+void	time_message(t_philo *philo, char type);
 
 #endif
