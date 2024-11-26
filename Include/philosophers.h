@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:52:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/12 16:09:12 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/26 21:31:19 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@
 typedef struct s_philo
 {
 	int				id;
-	int				alive;
+	bool			alive;
 	int				times_eaten;
 	int				forks_held;
 	int				last_meal;
 	pthread_t		thread;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	fork_left;
+	pthread_mutex_t	fork_right;
 	struct s_main	*main;
 }				t_philo;
 
@@ -47,7 +50,7 @@ typedef struct s_main
 	int				time_to_sleep;
 	int				number_of_times_each_philosophers_must_eat;
 	t_philo			**philo_list;
-	t_fork			**fork_list;
+	// t_fork			**fork_list;
 	pthread_mutex_t	mutex;
 }				t_main;
 

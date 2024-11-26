@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:33:26 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/12 17:45:44 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/26 20:42:46 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	*limited_routine(void *data)
 	main = philo->main;
 	while (!is_a_philo_dead(main) && has_every_philo_eaten(main))
 	{
-		time_since_last_meal(main, philo);
 		philo_eat(main, philo);
 		philo_sleep(main, philo);
 		philo_think(main, philo);
@@ -50,7 +49,6 @@ static void	*philosopher_routine(void *data)
 	main = philo->main;
 	while (!is_a_philo_dead(main))
 	{
-		time_since_last_meal(main, philo);
 		philo_eat(main, philo);
 		philo_sleep(main, philo);
 		philo_think(main, philo);
@@ -63,23 +61,17 @@ void	philo_loop(t_main *main)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (main->number_of_times_each_philosophers_must_eat == -1)
 	{
-		while (i < main->number_of_philosophers)
-		{
+		while (++i < main->number_of_philosophers)
 			pthread_create(&main->philo_list[i]->thread, NULL,
 				philosopher_routine, main->philo_list[i]);
-			i++;
-		}
 	}
 	else
 	{
-		while (i < main->number_of_philosophers)
-		{
+		while (++i < main->number_of_philosophers)
 			pthread_create(&main->philo_list[i]->thread, NULL,
 				limited_routine, main->philo_list[i]);
-			i++;
-		}
 	}
 }

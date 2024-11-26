@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:36:48 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/12 17:34:12 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/26 21:27:08 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void	time_message(t_philo *philo, char type)
 	gettimeofday(&time, NULL);
 	if (type == 'f')
 		ft_printf("%u %u has taken a fork\n", ((time.tv_sec * 1000)
+				+ (time.tv_usec / 1000)), philo->id);
+	if (type == 'g')
+		ft_printf("%u %u has put down his forks\n", ((time.tv_sec * 1000)
 				+ (time.tv_usec / 1000)), philo->id);
 	if (type == 'e')
 		ft_printf("%u %u is eating\n", ((time.tv_sec * 1000)
