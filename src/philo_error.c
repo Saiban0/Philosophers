@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 19:07:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/12 15:47:14 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/13 19:15:06 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,17 @@ static void	destroy_fork_mutexes_and_threads(t_main *main)
 
 static void	error_free(t_main *main)
 {
-	if (main->philo_list)
+	if (main)
 	{
-		destroy_fork_mutexes_and_threads(main);
-		ft_free_double_array((void **)main->philo_list);
+		if (main->philo_list)
+		{
+			destroy_fork_mutexes_and_threads(main);
+			ft_free_double_array((void **)main->philo_list);
+		}
+		if (main->fork_list)
+			ft_free_double_array((void **)main->fork_list);
+		free(main);
 	}
-	if (main->fork_list)
-		ft_free_double_array((void **)main->fork_list);
-	free(main);
 }
 
 void	error_management(int error_code, t_main *main)

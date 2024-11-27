@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:20:42 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/12 17:52:55 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/26 18:03:56 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	grab_forks_last_philo(t_main *main, t_philo *philo)
 {
 	if (philo->forks_held < 2)
 	{
-		pthread_mutex_lock(&philo->mutex);
+		// pthread_mutex_lock(&philo->mutex);
+		pthread_mutex_lock(&main->fork_list[philo->id - 1]->mutex);
+		pthread_mutex_lock(&main->fork_list[0]->mutex);
 		if (main->fork_list[philo->id - 1]->available
 			&& main->fork_list[0]->available)
 		{
-			pthread_mutex_lock(&main->fork_list[philo->id - 1]->mutex);
-			pthread_mutex_lock(&main->fork_list[0]->mutex);
 			time_message(philo, 'f');
 			time_message(philo, 'f');
 			main->fork_list[philo->id - 1]->available = 0;
@@ -29,12 +29,12 @@ static void	grab_forks_last_philo(t_main *main, t_philo *philo)
 			main->fork_list[0]->available = 0;
 			main->fork_list[0]->used_by = philo->id;
 			philo->forks_held = 2;
-			pthread_mutex_unlock(&philo->mutex);
+			// pthread_mutex_unlock(&philo->mutex);
 			philo_eat(main, philo);
 		}
 		else
 		{
-			pthread_mutex_lock(&philo->mutex);
+			// pthread_mutex_lock(&philo->mutex);
 		}
 	}
 }

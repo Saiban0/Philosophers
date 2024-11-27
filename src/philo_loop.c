@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:33:26 by bchedru           #+#    #+#             */
-/*   Updated: 2024/09/12 17:45:44 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/26 18:34:47 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ static void	time_since_last_meal(t_main *main, t_philo *philo)
 
 	gettimeofday(&time, NULL);
 	diff = ((time.tv_sec * 1000) + (time.tv_usec / 1000)) - philo->last_meal;
+	pthread_mutex_lock(&philo->mutex);
 	if (diff > main->time_to_die)
 		philo->alive = 0;
+	pthread_mutex_unlock(&philo->mutex);
 }
 
 static void	*limited_routine(void *data)
@@ -32,7 +34,7 @@ static void	*limited_routine(void *data)
 	main = philo->main;
 	while (!is_a_philo_dead(main) && has_every_philo_eaten(main))
 	{
-		time_since_last_meal(main, philo);
+		// time_since_last_meal(main, philo);
 		philo_eat(main, philo);
 		philo_sleep(main, philo);
 		philo_think(main, philo);
@@ -50,7 +52,7 @@ static void	*philosopher_routine(void *data)
 	main = philo->main;
 	while (!is_a_philo_dead(main))
 	{
-		time_since_last_meal(main, philo);
+		// time_since_last_meal(main, philo);
 		philo_eat(main, philo);
 		philo_sleep(main, philo);
 		philo_think(main, philo);
