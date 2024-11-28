@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 19:07:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/11/26 21:32:52 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:24:47 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	destroy_fork_mutexes_and_threads(t_main *main)
 	{
 		pthread_join(main->philo_list[i]->thread, NULL);
 		pthread_mutex_destroy(&main->philo_list[i]->mutex);
-		pthread_mutex_destroy(&main->philo_list[i]->print_mutex);
+		pthread_mutex_destroy(&main->print_mutex);
 		pthread_mutex_destroy(&main->philo_list[i]->fork_left);
 		pthread_mutex_destroy(&main->philo_list[i]->fork_right);
 		i++;
@@ -41,7 +41,7 @@ static void	error_free(t_main *main)
 
 void	error_management(int error_code, t_main *main)
 {
-	// pthread_mutex_lock(&main->mutex);
+	pthread_mutex_lock(&main->print_mutex);
 	if (error_code == 1)
 		ft_putstr_fd("philosophers: init failure \n", STDERR_FILENO);
 	if (error_code == 2)
@@ -49,6 +49,7 @@ void	error_management(int error_code, t_main *main)
 	if (error_code == 3)
 		ft_putstr_fd("philosophers: must run with either 4 or 5 arguments \n",
 			STDERR_FILENO);
+	pthread_mutex_unlock(&main->print_mutex);
 	error_free(main);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:25:44 by bchedru           #+#    #+#             */
-/*   Updated: 2024/11/26 21:19:55 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/28 15:50:27 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_philo	*create_philo(int id, t_main *main)
 	gettimeofday(&time, NULL);
 	new->last_meal = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 	pthread_mutex_init(&new->mutex, NULL);
-	pthread_mutex_init(&new->print_mutex, NULL);
 	new->main = main;
 	return (new);
 }
@@ -76,17 +75,22 @@ int	create_philo_list(t_main *main)
 
 int	init_philo(t_main *main, int argc, char **argv)
 {
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
 	main->number_of_philosophers = ft_atoi(argv[1]);
 	main->time_to_die = ft_atoi(argv[2]);
 	main->time_to_eat = ft_atoi(argv[3]);
 	main->time_to_sleep = ft_atoi(argv[4]);
-	main->number_of_times_each_philosophers_must_eat = -1;
+	main->philo_max_eat = -1;
 	main->philo_list = malloc(main->number_of_philosophers * sizeof(t_philo *));
+	main->start_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	// main->fork_list = malloc(main->number_of_philosophers * sizeof(t_fork *));
 	pthread_mutex_init(&main->mutex, NULL);
+	pthread_mutex_init(&main->print_mutex, NULL);
 	if (!main->philo_list || create_philo_list(main))
 		error_management(e_init_failure, main);
 	if (argc == 6)
-		main->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
+		main->philo_max_eat = ft_atoi(argv[5]);
 	return (0);
 }
