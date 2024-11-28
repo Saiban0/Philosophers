@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:36:48 by bchedru           #+#    #+#             */
-/*   Updated: 2024/11/26 21:27:08 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:23:15 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	is_a_philo_dead(t_main *main)
 {
 	int				i;
-	struct timeval	time;
 
 	i = -1;
 	while (++i < main->number_of_philosophers)
@@ -23,9 +22,6 @@ int	is_a_philo_dead(t_main *main)
 		pthread_mutex_lock(&main->philo_list[i]->mutex);
 		if (!main->philo_list[i]->alive)
 		{
-			gettimeofday(&time, NULL);
-			ft_printf("%u %u died\n", ((time.tv_sec * 1000)
-					+ (time.tv_usec / 1000)), main->philo_list[i]->id);
 			pthread_mutex_unlock(&main->philo_list[i]->mutex);
 			error_management(e_philo_died, main);
 			return (1);
@@ -38,15 +34,21 @@ int	is_a_philo_dead(t_main *main)
 int	has_every_philo_eaten(t_main *main)
 {
 	int	i;
+	int	finished_eating;
 
 	i = -1;
-	while (++i < main->number_of_philosophers)
+	finished_eating = 0;
+	while (++i < main->number_of_philosophers && main->philo_max_eat != -1)
 	{
-		if (main->philo_list[i]->times_eaten
-			>= main->number_of_times_each_philosophers_must_eat)
-			i++;
-		else
+		pthread_mutex_lock(&main->philo_list[i]->mutex);
+		if (finished_eating == main->number_of_philosophers)
+		{
+			ft_printf("HERE\n");
 			return (1);
+		}
+		if (main->philo_list[i]->times_eaten >= main->philo_max_eat)
+			finished_eating++;
+		pthread_mutex_unlock(&main->philo_list[i]->mutex);
 	}
 	return (0);
 }
@@ -83,4 +85,17 @@ void	time_message(t_philo *philo, char type)
 	if (type == 't')
 		ft_printf("%u %u is thinking\n", ((time.tv_sec * 1000)
 				+ (time.tv_usec / 1000)), philo->id);
+}
+
+void	philo_print(t_philo *philo, char *message)
+{
+	struct timeval	time;
+	int				current_time;
+
+	pthread_mutex_lock(&philo->main->mutex);
+	gettimeofday(&time, NULL);
+	current_time = ((time.tv_sec * 1000) + (time.tv_usec / 1000))
+		- philo->main->start_time;
+	ft_printf("%d %d %s", current_time, philo->id, message);
+	pthread_mutex_unlock(&philo->main->mutex);
 }

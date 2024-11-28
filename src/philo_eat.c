@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 20:20:42 by bchedru           #+#    #+#             */
-/*   Updated: 2024/11/26 21:31:48 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:21:55 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,51 +41,49 @@
 
 static void	grab_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->print_mutex);
+	pthread_mutex_lock(&philo->main->print_mutex);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->fork_left);
-		time_message(philo, 'f');
+		philo_print(philo, "has taken a fork\n");
 		pthread_mutex_lock(&philo->fork_right);
-		time_message(philo, 'f');
+		philo_print(philo, "has taken a fork\n");
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->fork_right);
-		time_message(philo, 'f');
+		philo_print(philo, "has taken a fork\n");
 		pthread_mutex_lock(&philo->fork_left);
-		time_message(philo, 'f');
+		philo_print(philo, "has taken a fork\n");
 	}
-	pthread_mutex_unlock(&philo->print_mutex);
+	pthread_mutex_unlock(&philo->main->print_mutex);
 }
 
-void	put_back_forks(t_main *main, t_philo *philo)
+void	put_back_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->fork_left);
 	pthread_mutex_unlock(&philo->fork_right);
-	pthread_mutex_lock(&main->mutex);
-	time_message(philo, 'g');
-	pthread_mutex_unlock(&main->mutex);
+	philo_print(philo, "has put down his forks\n");
 }
 
 void	philo_eat(t_main *main, t_philo *philo)
 {
 	struct timeval	time;
 
-	if (main->number_of_times_each_philosophers_must_eat != -1
+	if (main->philo_max_eat != -1
 		&& philo->times_eaten
-		>= main->number_of_times_each_philosophers_must_eat)
+		>= main->philo_max_eat)
 		return ;
-	if (philo->id != main->number_of_philosophers)
-		grab_forks(philo);
+	// if (philo->id != main->number_of_philosophers)
+	grab_forks(philo);
 	// else
 		// grab_forks_last_philo(main, philo);
 	pthread_mutex_lock(&philo->mutex);
-	time_message(philo, 'e');
+	philo_print(philo, "is eating\n");
 	usleep(main->time_to_eat * 1000);
 	gettimeofday(&time, NULL);
 	philo->last_meal = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 	philo->times_eaten++;
-	put_back_forks(main, philo);
+	put_back_forks(philo);
 	pthread_mutex_unlock(&philo->mutex);
 }
