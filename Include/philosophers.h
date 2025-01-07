@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:52:49 by bchedru           #+#    #+#             */
-/*   Updated: 2024/11/26 21:31:19 by bchedru          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:21:44 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_philo
 	int				last_meal;
 	pthread_t		thread;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	fork_left;
 	pthread_mutex_t	fork_right;
 	struct s_main	*main;
@@ -48,9 +47,11 @@ typedef struct s_main
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				number_of_times_each_philosophers_must_eat;
+	int				philo_max_eat;
+	int				start_time;
 	t_philo			**philo_list;
 	// t_fork			**fork_list;
+	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	mutex;
 }				t_main;
 
@@ -71,9 +72,10 @@ void	philo_loop(t_main *main);
 void	philo_end(t_main *main);
 void	error_management(int error_code, t_main *main);
 void	philo_eat(t_main *main, t_philo *philo);
-void	put_back_forks(t_main *main, t_philo *philo);
+void	put_back_forks(t_philo *philo);
 void	philo_think(t_main *main, t_philo *philo);
 void	philo_sleep(t_main *main, t_philo *philo);
 void	time_message(t_philo *philo, char type);
+void	philo_print(t_philo *philo, char *message);
 
 #endif
