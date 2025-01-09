@@ -6,24 +6,19 @@
 #    By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 19:00:14 by bchedru           #+#    #+#              #
-#    Updated: 2024/09/09 19:44:01 by bchedru          ###   ########.fr        #
+#    Updated: 2025/01/09 18:57:02 by bchedru          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
-
-LIBAMOA = libamoa/libamoa.a
 
 CC = cc
 
 CFLAGS =	-Wall -Wextra -Werror -g \
 			-IInclude -fsanitize=thread
 
-LFLAGS =	-Llibamoa \
-			-lamoa
-
-FILES = main philo_init philo_utils philo_loop philo_error philo_eat \
-		philo_think philo_sleep
+FILES = main ft_init ft_solo_bolo error_management error_management_bis  \
+		routine utils ft_atol
 
 SRC_FILES = $(addprefix src/, $(FILES)) \
 
@@ -38,19 +33,15 @@ bonus: $(NAME_BONUS)
 
 clean :
 	rm -rf $(OBJ_DIR)
-	make fclean -C libamoa
 
 fclean : clean
 	rm -rf $(NAME)
-	make fclean -C libamoa
 
 re: fclean all
 
-$(NAME): $(OBJ_DIR) $(OBJS) $(LIBAMOA)
-	$(CC) -o $@ $(OBJS) $(LFLAGS) $(CFLAGS)
+$(NAME): $(OBJ_DIR) $(OBJS)
+	$(CC) -o $@ $(OBJS) $(CFLAGS)
 
-$(LIBAMOA):
-	make -C libamoa
 
 $(OBJ_DIR):
 	mkdir $@
