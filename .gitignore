@@ -3,3 +3,4 @@
 /philo
 */*.o
 philo
+*.o
