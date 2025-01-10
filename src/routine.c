@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 15:07:53 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/09 18:43:55 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/10 20:48:05 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,38 +31,39 @@ static int	philo_take_forks(t_philo *philo)
 	return (0);
 }
 
-static int	philo_belly_full(t_philo *philo)
+static int	philo_belly_full(t_philo *temp)
 {
-	t_philo	*temp;
+	t_philo	*philo;
 
-	temp = philo;
-	pthread_mutex_lock(&temp->main->mutex_print);
-	pthread_mutex_lock(&temp->main->mutex_main);
-	if (philo->main->running != -1)
-		printf("(TOCHECK) %ldms the philosophers are satiated\n", philo_get_time(philo->main->start_time));
-	philo->main->running = -1;
-	pthread_mutex_unlock(&temp->main->mutex_print);
-	pthread_mutex_unlock(&temp->main->mutex_main);
+	philo = temp;
+	pthread_mutex_lock(&philo->main->mutex_print);
+	pthread_mutex_lock(&philo->main->mutex_main);
+	if (temp->main->running != 0)
+		printf("%ldms the philosophers have eaten enough\n",
+			philo_get_time(philo->main->start_time));
+	temp->main->running = 0;
+	pthread_mutex_unlock(&philo->main->mutex_main);
+	pthread_mutex_unlock(&philo->main->mutex_print);
 	return (1);
 }
 
-int	philo_eat(t_philo *philo)
+int	philo_eat(t_philo *temp)
 {
-	t_philo	*temp;
+	t_philo	*philo;
 
-	temp = philo;
-	philo_take_forks(temp);
-	pthread_mutex_lock(&temp->update_time);
-	if (gettimeofday(&temp->last_meal, NULL) == -1)
-		return (ft_error_get_time(temp));
-	pthread_mutex_unlock(&temp->update_time);
-	philo_print(temp, PHILO_EATMSG);
-	usleep(temp->main->time_to_eat * 1000);
-	pthread_mutex_unlock(&temp->fork);
-	pthread_mutex_unlock(temp->fork_right);
-	if (temp->main->max_eat != -1 && ++temp->times_eaten
-		> temp->main->max_eat)
-		return (philo_belly_full(temp));
+	philo = temp;
+	philo_take_forks(philo);
+	pthread_mutex_lock(&philo->update_time);
+	if (gettimeofday(&philo->last_meal, NULL) == -1)
+		return (ft_error_get_time(philo));
+	pthread_mutex_unlock(&philo->update_time);
+	philo_print(philo, PHILO_EATMSG);
+	usleep(philo->main->time_to_eat * 1000);
+	pthread_mutex_unlock(philo->fork_right);
+	pthread_mutex_unlock(&philo->fork);
+	if (philo->main->max_meals != -1
+		&& ++philo->times_eaten > philo->main->max_meals)
+		return (philo_belly_full(philo));
 	return (0);
 }
 
@@ -82,7 +83,7 @@ void	*philo_routine(void *temp)
 	if (gettimeofday(&philo->last_meal, NULL) == -1)
 	{
 		pthread_mutex_lock(&philo->main->mutex_main);
-		philo->main->running = -1;
+		philo->main->running = 0;
 		print_error_msg(e_gettime);
 		pthread_mutex_unlock(&philo->main->mutex_main);
 		pthread_mutex_unlock(&philo->update_time);

@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:04:16 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/09 18:33:59 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/10 20:34:53 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_free_time(t_philo **philo, t_main **main, int i)
 	return (print_error_msg(e_mutex));
 }
 
-int	ft_free_thread(t_main **main, t_philo **philo, int i)
+int	ft_free_thread(t_philo **philo, t_main **main, int i)
 {
 	t_philo	*temp;
 	int		j;
@@ -77,15 +77,16 @@ int	ft_free_thread(t_main **main, t_philo **philo, int i)
 	j = 0;
 	temp = *philo;
 	pthread_mutex_lock(&(*main)->mutex_main);
-	(*main)->running = -1;
+	(*main)->running = 0;
+	pthread_mutex_unlock(&(*main)->mutex_main);
 	while (temp != NULL && j < i)
 	{
-		pthread_join(temp->id, NULL);
+		pthread_join(temp->thread_id, NULL);
 		temp = temp->philo_right;
 		j++;
 	}
 	temp = *philo;
-	while (temp)
+	while (temp != NULL)
 	{
 		pthread_mutex_destroy(&temp->update_time);
 		temp = temp->philo_right;
@@ -94,18 +95,19 @@ int	ft_free_thread(t_main **main, t_philo **philo, int i)
 	return (ft_free_philo(*philo, *main, 0));
 }
 
-int	ft_free_end(t_main *main, t_philo *philo)
+int	ft_free_end(t_philo *philo, t_main *main)
 {
 	t_philo	*temp;
 
-	while (temp)
+	temp = philo;
+	while (temp != NULL)
 	{
 		pthread_join(temp->thread_id, NULL);
 		pthread_mutex_destroy(&temp->update_time);
 		temp = temp->philo_right;
 	}
 	temp = philo;
-	while (temp)
+	while (temp != NULL)
 	{
 		pthread_mutex_destroy(&philo->fork);
 		philo = philo->philo_right;

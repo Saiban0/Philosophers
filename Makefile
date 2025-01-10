@@ -6,7 +6,7 @@
 #    By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/02 19:00:14 by bchedru           #+#    #+#              #
-#    Updated: 2025/01/09 18:57:02 by bchedru          ###   ########.fr        #
+#    Updated: 2025/01/10 20:46:38 by bchedru          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = philo
 CC = cc
 
 CFLAGS =	-Wall -Wextra -Werror -g \
-			-IInclude -fsanitize=thread
+			-IInclude -pthread -fsanitize=thread#-fsanitize=address
 
 FILES = main ft_init ft_solo_bolo error_management error_management_bis  \
 		routine utils ft_atol
