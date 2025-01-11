@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:58:46 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/10 20:35:11 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:15:30 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	*solo_bolo_routine(void *temp)
 
 	philo = (t_philo *)temp;
 	pthread_mutex_lock(&philo->fork);
-	printf("0ms 1 has taken a fork left\n");
+	printf("0 1 has taken a fork left\n");
 	usleep(philo->main->time_to_die * 1000);
-	printf("%dms 1 died (skill issue)\n", philo->main->time_to_die + 1);
+	printf("%ld 1 died\n", philo->main->time_to_die + 1);
 	pthread_mutex_unlock(&philo->fork);
 	return (NULL);
 }

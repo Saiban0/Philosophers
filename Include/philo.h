@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:40:50 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/10 20:45:15 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:15:03 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 
 typedef struct s_main
 {
-	int				nb_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				max_meals;
+	long			nb_philo;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			max_meals;
 	struct timeval	start_time;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_main;

@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 11:56:36 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/10 19:37:35 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:15:53 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_death_check(t_philo *philo, t_main *main)
 			pthread_mutex_lock(&philo->main->mutex_print);
 			pthread_mutex_lock(&philo->main->mutex_main);
 			if (main->running != 0)
-				printf("%ldms %d died (skill issue)\n",
+				printf("%ld %d died\n",
 					philo_get_time(temp->main->start_time), temp->id);
 			main->running = 0;
 			pthread_mutex_unlock(&philo->main->mutex_main);

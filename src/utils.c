@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 16:36:39 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/10 19:58:17 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:16:12 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	philo_print(t_philo *philo, char *str)
 	pthread_mutex_lock(&philo->main->mutex_print);
 	pthread_mutex_lock(&philo->main->mutex_main);
 	if (philo->main->running == 1)
-		printf("%ldms %d %s", philo_get_time(philo->main->start_time),
+		printf("%ld %d %s", philo_get_time(philo->main->start_time),
 			philo->id, str);
 	pthread_mutex_unlock(&philo->main->mutex_main);
 	pthread_mutex_unlock(&philo->main->mutex_print);

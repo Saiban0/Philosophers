@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:40:40 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/10 19:54:29 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:16:36 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	ft_init_main(t_main *main, int argc, char **argv)
 		main->max_meals = ft_atol(argv[5]);
 	else
 		main->max_meals = -1;
-	if (main->nb_philo > __INT_MAX__ || main->time_to_die > __INT_MAX__
-		|| main->time_to_eat > __INT_MAX__ || main->time_to_sleep > __INT_MAX__
-		|| main->max_meals > __INT_MAX__)
+	if (main->nb_philo > 2147483647 || main->time_to_die > 2147483647
+		|| main->time_to_eat > 2147483647 || main->time_to_sleep > 2147483647
+		|| main->max_meals > 2147483647)
 		return (print_error_msg(e_args_overflow));
 	return (0);
 }

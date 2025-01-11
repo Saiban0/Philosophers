@@ -6,7 +6,7 @@
 /*   By: bchedru <bchedru@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 15:07:53 by bchedru           #+#    #+#             */
-/*   Updated: 2025/01/10 20:48:05 by bchedru          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:43:26 by bchedru          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ static int	philo_belly_full(t_philo *temp)
 	philo = temp;
 	pthread_mutex_lock(&philo->main->mutex_print);
 	pthread_mutex_lock(&philo->main->mutex_main);
-	if (temp->main->running != 0)
-		printf("%ldms the philosophers have eaten enough\n",
-			philo_get_time(philo->main->start_time));
 	temp->main->running = 0;
 	pthread_mutex_unlock(&philo->main->mutex_main);
 	pthread_mutex_unlock(&philo->main->mutex_print);
